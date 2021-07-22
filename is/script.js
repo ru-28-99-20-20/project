@@ -1,68 +1,79 @@
 'use strict';
 
-
-let numberOfFilms;
-function start () {
-    numberOfFilms = +prompt("Сколько фильмов вы уже просмотрели?", "");
-
-while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)){
-    numberOfFilms = +prompt("Сколько фильмов вы уже просмотрели?", "");
-}
-}
-
-start();
 const personalMovieDB = {
-    count: numberOfFilms,
+    count: 0,
     movie: {},
     actors: {},
     genres: [],
-    privat: false
-};
-
-
-function rememberMyFilms (){
-    for( let i = 0; i < 2; i++){
-    const  a  = prompt("Один из последних просмотрегых фильмов?", ""),
-           d  = prompt("На склдько его оцените?", "");
-    if (a != null && d != null && a !="" && d != "" && a.length < 50){
-      personalMovieDB.movie [a] = d;  
-      console.log('done');
-    }else{
-        console.log('error');
-    i--;
+    privat: false,
+    start: function () {
+        personalMovieDB.count = +prompt("Сколько фильмов вы уже просмотрели?", "");
+    
+        while (personalMovieDB.count == '' || personalMovieDB.count == null || isNaN(personalMovieDB.count)){
+           personalMovieDB.count = +prompt("Сколько фильмов вы уже просмотрели?", "");
+        }
+    },
+    rememberMyFilms: function (){
+        for( let i = 0; i < 2; i++){
+        const  a  = prompt("Один из последних просмотрегых фильмов?", ""),
+               d  = prompt("На склдько его оцените?", "");
+        if (a != null && d != null && a !="" && d != "" && a.length < 50){
+          personalMovieDB.movie [a] = d;  
+          console.log('done');
+        }else{
+            console.log('error');
+        i--;
+         }
+    
      }
-  }
-}
-rememberMyFilms(); 
-
-function derectFuncLewel(){
-   if (personalMovieDB.count < 10){
-    console.log('Просмотрено довольно мало фильмов');
-    }else if(10 >= personalMovieDB.count < 30){
-    console.log('Вы классический зритель');
-  }   else if (personalMovieDB.count >= 30){
-    console.log('Вы киноман');
-   }  else {
-    console.log('Произошла ошибка');
-   }
-    console.log(personalMovieDB);
-}
-
-derectFuncLewel();
-
-function showMyDB(hidden){
-    if (!hidden){
-        console.log(personalMovieDB);
-    }
-
-}
-showMyDB (personalMovieDB.privat);
-
-function wtitenOfGenres (){
-    for (let i = 1; i <= 3; i++){
-        personalMovieDB.genres[i - 1] = prompt(`ваш улюблений жанр?  ${i}`);;
-    }
-}
-wtitenOfGenres();
-
-
+    },
+    derectFuncLewel: function () {
+        if (personalMovieDB.count < 10){
+         console.log('Просмотрено довольно мало фильмов');
+         }else if(10 >= personalMovieDB.count < 30){
+         console.log('Вы классический зритель');
+       }   else if (personalMovieDB.count >= 30){
+         console.log('Вы киноман');
+        }  else {
+         console.log('Произошла ошибка');
+        }
+         console.log(personalMovieDB);
+     
+    },
+    showMyDB: function(hidden) {
+        if (!hidden){
+            console.log(personalMovieDB);
+        }
+    },
+    toggleVisibleMyDB: function() {
+        if (personalMovieDB.privat){
+            personalMovieDB.privat = false;
+        }else{
+            personalMovieDB.privat = true;
+        }
+    },
+    wtitenOfGenres: function (){
+        for (let i = 1; i < 2; i++){
+            // let genre = prompt(`ваш улюблений жанр?  ${i}`);
+            // if (genre == ''|| genre == null){
+            //     console.log("вы ввели некоретные даные");
+            //     i--;
+            
+            // }else{
+            //       personalMovieDB.genres[i - 1] = genre;
+            // }
+            let genres = prompt(`введите ваши любимые жанры через запятую`);
+            if (genres == ''|| genres == null){
+                    console.log("вы ввели некоретные даные");
+                    i--;
+                
+                }else{
+                      personalMovieDB.genres = genres.split(',');
+                      personalMovieDB.genres.sort();
+                }
+        }
+        personalMovieDB.genres.forEach((item, i) => {
+            console.log(`Любимый жанр ${i + 1}) - это ${item}`);
+    });
+ }
+};
